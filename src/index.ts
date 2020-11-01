@@ -45,6 +45,7 @@ if (NODE_ENV === 'development') {
 
 if (NODE_ENV === 'production') {
   app.use((req, res, next) => {
+    console.log('req.url', req.url);
     if (req.secure) {
       console.log('req.secure?', req.secure);
       next();
