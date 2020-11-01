@@ -46,8 +46,10 @@ if (NODE_ENV === 'development') {
 if (NODE_ENV === 'production') {
   app.use((req, res, next) => {
     if (req.secure) {
+      console.log('req.secure?', req.secure);
       next();
     } else {
+      console.log('redirect', 'https://' + req.headers.host + req.url);
       res.redirect('https://' + req.headers.host + req.url);
     }
   });
