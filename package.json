@@ -15,7 +15,7 @@
     "url": "git+https://github.com/Demven/blog-api.git"
   },
   "author": "",
-  "license": "ISC",
+  "private": true,
   "bugs": {
     "url": "https://github.com/Demven/blog-api/issues"
   },
