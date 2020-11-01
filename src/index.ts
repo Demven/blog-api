@@ -1,7 +1,6 @@
 import 'envkey';
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
@@ -21,7 +20,6 @@ const {
 connectToDatabase();
 
 const app = express();
-const DIST_FOLDER = path.join(process.cwd(), 'dist');
 
 Sentry.init({
   dsn: SENTRY_DSN_API,
@@ -45,7 +43,7 @@ if (NODE_ENV === 'development') {
 
 if (NODE_ENV === 'production') {
   app.use((req, res, next) => {
-    console.log('req.url', req.url);
+    console.log('req.url', req.protocol, req.secure, req.url);
     if (req.secure) {
       console.log('req.secure?', req.secure);
       next();
