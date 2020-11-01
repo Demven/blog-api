@@ -20,6 +20,7 @@ const {
 connectToDatabase();
 
 const app = express();
+app.enable('trust proxy');
 
 Sentry.init({
   dsn: SENTRY_DSN_API,
@@ -43,14 +44,9 @@ if (NODE_ENV === 'development') {
 
 if (NODE_ENV === 'production') {
   app.use((req, res, next) => {
-    console.log('req', req);
-    if (req.secure) {
-      console.log('req.secure?', req.secure);
-      next();
-    } else {
-      console.log('redirect', 'https://' + req.headers.host + req.url);
-      res.redirect('https://' + req.headers.host + req.url);
-    }
+    console.log('req.secure?', req.secure, req.protocol);
+
+    next();
   });
 }
 
