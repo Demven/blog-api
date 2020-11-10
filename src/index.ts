@@ -34,11 +34,6 @@ Sentry.init({
 app.use(Sentry.Handlers.requestHandler()); // The request handler must be the first middleware on the app
 app.use(Sentry.Handlers.tracingHandler());
 
-app.use((req, res, next) => {
-  console.info('req.originalUrl', req.originalUrl, req.hostname);
-  next();
-});
-
 if (NODE_ENV === 'development') {
   app.use(cors());
 } else {
