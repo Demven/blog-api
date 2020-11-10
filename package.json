@@ -1,6 +1,6 @@
 {
   "name": "blog-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "GraphQL server and REST API for the blog-project",
   "main": "index.js",
   "scripts": {
@@ -31,12 +31,10 @@
     "envkey": "^1.2.8",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
-    "express-robots": "^0.1.6",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.11",
     "mongoose-unique-validator": "^2.0.3",
     "rimraf": "^3.0.2",
-    "sitemap": "^4.1.1",
     "slug": "^1.1.0"
   },
   "devDependencies": {

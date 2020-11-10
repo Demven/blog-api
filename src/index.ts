@@ -8,8 +8,6 @@ import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import connectToDatabase from './dal';
 import apiV1Router from './api/v1';
-import robots from './middleware/robots';
-import generateSitemap from './middleware/sitemap';
 
 const {
   NODE_ENV,
@@ -55,9 +53,7 @@ if (NODE_ENV === 'production') {
 app.get('/', (req, res) => {
   res.send('Status: running');
 });
-app.get('/sitemap.xml', generateSitemap);
 
-app.use(robots());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());

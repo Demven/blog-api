@@ -43,6 +43,22 @@ router.get('/popular', (req:Request, res:Response, next:NextFunction) => {
     .catch(error => next(error));
 });
 
+router.get('/sitemap', (req:Request, res:Response, next:NextFunction) => {
+  Article
+    .find({}, 'slug image last_updated')
+    .populate('image')
+    .sort({ last_updated: 'desc' })
+    .exec()
+    .then(articles => {
+      if (articles) {
+        res.json(articles);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch(error => next(error));
+});
+
 router.get('/:slug', (req:Request, res:Response, next) => {
   const slug:string = req.params.slug;
   const ignorePageView = req.query.ignore ? req.query.ignore === 'pageview' : false;
