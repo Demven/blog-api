@@ -13,7 +13,6 @@ const {
   MONGODB_USERNAME,
   MONGODB_PASSWORD,
   MONGODB_HOST,
-  MONGODB_PORT,
 } = process.env;
 
 require('mongoose').Promise = require('bluebird');
@@ -21,7 +20,7 @@ require('mongoose').Promise = require('bluebird');
 export default function connectToDatabase(): Promise<Connection> {
   let connectionURI:string;
   if (NODE_ENV === 'production' && MONGODB_USERNAME) {
-    connectionURI = `mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_APP_NAME}`;
+    connectionURI = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOST}/${MONGODB_APP_NAME}?retryWrites=true&w=majority`;
   } else {
     connectionURI = `mongodb://${MONGODB_HOST}/${MONGODB_APP_NAME}`;
   }

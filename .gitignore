@@ -2,7 +2,7 @@
 /node_modules
 /db-export
 /build
-.env
+.env*
 
 .DS_Store
 database-update.sh
