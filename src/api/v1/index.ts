@@ -9,7 +9,7 @@ import userRouter from './user';
 const v1Router = router();
 
 v1Router.get('/status', (req, res) => {
-  res.sendStatus(200);
+  res.send('Status: running');
 });
 v1Router.use('/article', articleRouter);
 v1Router.use('/homepage-section', homepageSectionRouter);
