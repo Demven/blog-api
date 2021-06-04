@@ -10,4 +10,6 @@ export const homepageSectionsQuery = `
   homepageSections: [HomepageSection]
 `;
 
-export const homepageSectionsMutations = ``;
+export const homepageSectionsMutations = `
+  updateHomepageSection (id:Int!, articleIds:[Int]): HomepageSection
+`;

@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
+import generateSlug from 'slug';
 import Article from '../../dal/models/article';
 import ViewsCount from '../../dal/models/views-count';
+import Image from '../../dal/models/image';
+import ArticleDto from '../../types/ArticleDto';
 
 const articlesResolvers = {
   article: ({ slug, ignorePageView = false }) => {
@@ -49,6 +52,57 @@ const articlesResolvers = {
 
     return findTopViews()
       .then(findArticlesByViews);
+  },
+
+  sitemapArticles: () => {
+    return Article
+      .find({}, 'slug image last_updated')
+      .populate('image')
+      .sort({ last_updated: 'desc' })
+      .exec();
+  },
+
+  createArticle: ({ article }: { article:ArticleDto }) => {
+    return Promise.all([
+        Image.create(article.image),
+        ViewsCount.create({ count: 0 }),
+      ])
+      .then(([mainImage, viewsCount]: [Object, Object]) => {
+        return Article.create({
+          ...article,
+          slug: generateSlug(article.title).toLowerCase(),
+          image: mainImage,
+          views: viewsCount,
+          publication_date: null,
+        });
+      });
+  },
+
+  updateArticle: async ({ article }: { article:ArticleDto }) => {
+    const existingArticle:any = await Article
+      .findOne({ slug: article.slug })
+      .populate('image category keywords');
+
+    let imagePromise:Promise<any> = Promise.resolve(article.image);
+    if (existingArticle.image && existingArticle.image.url !== article.image.url) {
+      imagePromise = Image
+        .findOne({ url: article.image.url })
+        .then(image => {
+          if (image) {
+            // reuse existing image
+            return image;
+          } else {
+            return Image.create(article.image);
+          }
+        });
+    }
+
+    const mainImage = await imagePromise;
+
+    return Article.updateOne({ slug: article.slug }, {
+      ...article,
+      image: mainImage,
+    });
   },
 };
 

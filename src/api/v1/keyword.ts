@@ -34,11 +34,11 @@ router.get('/:keywordSlug/articles', (req:Request, res:Response, next) => {
     .findOne({ slug: keywordSlug })
     .then((keyword:any) => {
       if (keyword) {
-        const query = { 'keyword': keyword._id };
+        const query = { 'keywords': keyword._id };
         const exclude = { body: 0 };
 
         if (name) {
-          query['name'] = new RegExp(<string>name, 'i');
+          query['title'] = new RegExp(<string>name, 'i');
         }
 
         Article

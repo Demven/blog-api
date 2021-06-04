@@ -1,4 +1,5 @@
 import HomepageSection from '../../dal/models/homepage-section';
+import Article from '../../dal/models/article';
 
 const homepageSectionsResolvers = {
   homepageSections: () => {
@@ -12,6 +13,14 @@ const homepageSectionsResolvers = {
         select: '-body',
       })
       .exec();
+  },
+
+  updateHomepageSection: async (
+    { id, articleIds = [] }: { id: number, articleIds: number[] }
+  ) => {
+    const articles = await Promise.all(articleIds.map((id:number) => Article.findById(id)));
+
+    return HomepageSection.findByIdAndUpdate(id, { $set: { articles: articles } });
   },
 };
 
