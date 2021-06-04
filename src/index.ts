@@ -1,5 +1,5 @@
 import 'envkey';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -8,6 +8,7 @@ import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import connectToDatabase from './dal';
 import apiV1Router from './api/v1';
+import graphqlServer from './graphql';
 
 const {
   NODE_ENV,
@@ -50,14 +51,16 @@ if (NODE_ENV === 'production') {
   });
 }
 
-app.get('/', (req, res) => {
+app.get('/', (req:Request, res:Response) => {
   res.send('Status: running');
 });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
+
+app.use('/graphql', graphqlServer);
 
 app.use('/v1', apiV1Router);
 
@@ -65,12 +68,16 @@ app.use('/v1', apiV1Router);
 app.use(Sentry.Handlers.errorHandler());
 
 // Optional fallthrough error handler
-app.use((err: Error, req: express.Request, res: express.Response) => {
-  console.error('Caught error: ', err.message);
-  res.status(500).send(`Internal Server Error: ${err.message}`);
+app.use((error:Error, req:Request, res:Response, next) => {
+  if (error.message) {
+    console.error('Caught error: ', error.message);
+    res.status(500).send(`Internal Server Error: ${error.message}`);
+  } else {
+    next();
+  }
 });
 
-const port: number = global.parseInt(PORT, 10);
+const port:number = global.parseInt(PORT, 10);
 app.listen(port, () => {
   global.console.info(`Server started on port:${port}`);
 });
