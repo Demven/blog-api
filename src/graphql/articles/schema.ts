@@ -6,7 +6,7 @@ export const articlesDefinitions = `
     image: Image
     category: Category
     keywords: [Keyword]
-    viewsCount: ViewsCount
+    views: ViewsCount
     publication_date: DateTime
     last_updated: DateTime
     deleted: Boolean
@@ -41,7 +41,6 @@ export const articlesDefinitions = `
     image: ImageDto
     category: CategoryDto
     keywords: [KeywordDto]
-    viewsCount: ViewsCountDto
     publication_date: DateTime
     last_updated: DateTime
     deleted: Boolean
