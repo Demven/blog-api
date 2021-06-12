@@ -1,6 +1,6 @@
 {
   "name": "blog-api",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "GraphQL server and REST API for the blog-project",
   "main": "index.js",
   "scripts": {
