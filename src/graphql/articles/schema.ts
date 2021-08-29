@@ -1,5 +1,6 @@
 export const articlesDefinitions = `
   type Article {
+    _id: String
     title: String
     description: String
     slug: String
@@ -14,18 +15,21 @@ export const articlesDefinitions = `
   }
 
   input ImageDto {
+    _id: String
     url: String
     description: String
     credits: String
   }
 
   input CategoryDto {
+    _id: String
     title: String
     slug: String
     color: String
   }
 
   input KeywordDto {
+    _id: String
     name: String
     slug: String
   }
@@ -35,12 +39,14 @@ export const articlesDefinitions = `
   }
 
   input ArticleDto {
+    _id: String
     title: String!
     description: String
     slug: String
     image: ImageDto
     category: CategoryDto
     keywords: [KeywordDto]
+    views: ViewsCountDto
     publication_date: DateTime
     last_updated: DateTime
     deleted: Boolean

@@ -16,11 +16,11 @@ const homepageSectionsResolvers = {
   },
 
   updateHomepageSection: async (
-    { id, articleIds = [] }: { id: number, articleIds: number[] }
+    { id, articleIds = [] }: { id:string, articleIds:string[] }
   ) => {
-    const articles = await Promise.all(articleIds.map((id:number) => Article.findById(id)));
+    const articles = await Promise.all(articleIds.map((id:string) => Article.findById(id)));
 
-    return HomepageSection.findByIdAndUpdate(id, { $set: { articles: articles } });
+    return HomepageSection.findByIdAndUpdate(id, { $set: { articles } });
   },
 };
 

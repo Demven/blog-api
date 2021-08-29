@@ -4,6 +4,7 @@ import KeywordDto from './KeywordDto';
 import ViewsCountDto from './ViewsCountDto';
 
 export default interface ArticleDto {
+  _id: string;
   title: string;
   description?: string;
   slug: string;

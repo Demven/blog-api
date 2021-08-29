@@ -1,5 +1,6 @@
 export const homepageSectionsDefinitions = `
   type HomepageSection {
+    _id: String
     category: Category
     articles: [Article]
     order: Int
@@ -11,5 +12,5 @@ export const homepageSectionsQuery = `
 `;
 
 export const homepageSectionsMutations = `
-  updateHomepageSection (id:Int!, articleIds:[Int]): HomepageSection
+  updateHomepageSection (id:String!, articleIds:[String]): HomepageSection
 `;
