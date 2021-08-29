@@ -1,5 +1,6 @@
 export const categoriesDefinitions = `
   type Category {
+    _id: String
     title: String
     slug: String
     color: String

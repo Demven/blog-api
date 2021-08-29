@@ -1,5 +1,6 @@
 export const keywordsDefinitions = `
   type Keyword {
+    _id: String
     name: String
     slug: String
   }

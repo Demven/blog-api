@@ -102,7 +102,8 @@ const articlesResolvers = {
     return Article.updateOne({ slug: article.slug }, {
       ...article,
       image: mainImage,
-    });
+    })
+      .then(updateResult => updateResult?.ok === 1 ? article : null);
   },
 };
 
