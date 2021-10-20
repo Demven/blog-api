@@ -18,7 +18,7 @@ const {
 
 require('mongoose').Promise = require('bluebird');
 
-export default function connectToDatabase(): Promise<Connection> {
+export default function connectToDatabase():Promise<Connection> {
   let connectionURI:string;
   if (NODE_ENV === 'production' && MONGODB_USERNAME) {
     connectionURI = `mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOST}/${MONGODB_APP_NAME}?retryWrites=true&w=majority`;
@@ -31,7 +31,7 @@ export default function connectToDatabase(): Promise<Connection> {
   const options = { useFindAndModify: false };
 
   return new Promise((resolve, reject) => {
-    mongoose.connect(connectionURI, options, (error: Error) => {
+    mongoose.connect(connectionURI, options, error => {
       if (error) {
         console.error(error);
         reject(error);
