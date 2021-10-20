@@ -1,6 +1,7 @@
 import { buildSchema } from 'graphql';
 import { imagesDefinitions, imagesQuery, imagesMutations } from './images/schema';
 import { viewsCountDefinitions, viewsCountQuery, viewsCountMutations } from './views-count/schema';
+import { thanksCountDefinitions, thanksCountQuery, thanksCountMutations } from './thanks-count/schema';
 import { keywordsDefinitions, keywordsQuery, keywordsMutations } from './keywords/schema';
 import { categoriesDefinitions, categoriesQuery, categoriesMutations } from './categories/schema';
 import { articlesDefinitions, articlesQuery, articlesMutations } from './articles/schema';
@@ -12,6 +13,7 @@ const schema = `
 
   ${imagesDefinitions}
   ${viewsCountDefinitions}
+  ${thanksCountDefinitions}
   ${keywordsDefinitions}
   ${categoriesDefinitions}
   ${articlesDefinitions}
@@ -20,6 +22,7 @@ const schema = `
   type Query {
     ${imagesQuery}
     ${viewsCountQuery}
+    ${thanksCountQuery}
     ${keywordsQuery}
     ${categoriesQuery}
     ${articlesQuery}
@@ -29,6 +32,7 @@ const schema = `
   type Mutation {
     ${imagesMutations}
     ${viewsCountMutations}
+    ${thanksCountMutations}
     ${keywordsMutations}
     ${categoriesMutations}
     ${articlesMutations}

@@ -8,7 +8,7 @@
     "build": "npm run clean && tsc",
     "start": "nodemon build/index.js",
     "clean": "rimraf build",
-    "db-migration:rename-quote-to-epigraph": "ts-node -O '{\"module\": \"commonjs\"}' src/dal/migrations/2-rename-quote-to-epigraph"
+    "db-migration:add-thanks-count": "ts-node -O '{\"module\": \"commonjs\"}' src/dal/migrations/3-add-thanks-count"
   },
   "repository": {
     "type": "git",

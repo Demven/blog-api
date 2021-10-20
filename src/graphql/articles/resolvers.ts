@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import generateSlug from 'slug';
 import Article from '../../dal/models/article';
 import ViewsCount from '../../dal/models/views-count';
+import ThanksCount from '../../dal/models/thanks-count';
 import Image from '../../dal/models/image';
 import ArticleDto from '../../types/ArticleDto';
 
@@ -10,7 +11,7 @@ const articlesResolvers = {
     function findArticleAndPopulate(articleSlug:string) {
       return Article
         .findOne({ slug: articleSlug })
-        .populate('image category keywords views')
+        .populate('image category keywords views thanks')
         .exec();
     }
 
@@ -66,13 +67,15 @@ const articlesResolvers = {
     return Promise.all([
         Image.create(article.image),
         ViewsCount.create({ count: 0 }),
+        ThanksCount.create({ count: 0 }),
       ])
-      .then(([mainImage, viewsCount]: [Object, Object]) => {
+      .then(([mainImage, viewsCount, thanksCount]: [Object, Object, Object]) => {
         return Article.create({
           ...article,
           slug: generateSlug(article.title).toLowerCase(),
           image: mainImage,
           views: viewsCount,
+          thanks: thanksCount,
           publication_date: null,
         });
       });
