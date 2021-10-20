@@ -5,6 +5,7 @@ import { Router as expressRouter, Request, Response, NextFunction } from 'expres
 import Article from '../../dal/models/article';
 import Image from '../../dal/models/image';
 import ViewsCount from '../../dal/models/views-count';
+import ThanksCount from '../../dal/models/thanks-count';
 import { authorization, processAuthError } from '../authorization';
 
 const router = expressRouter();
@@ -66,7 +67,7 @@ router.get('/:slug', (req:Request, res:Response, next) => {
   function findArticleAndPopulate(articleSlug: string) {
     return Article
       .findOne({ slug: articleSlug })
-      .populate('image category keywords views')
+      .populate('image category keywords views thanks')
       .exec();
   }
 
@@ -100,6 +101,7 @@ router.post('/', authorization, processAuthError, (req:Request, res:Response, ne
   const article = req.body;
   const createMainImage = () => Image.create(article.image);
   const createViewsCount = () => ViewsCount.create({ count: 0 });
+  const createThanksCount = () => ThanksCount.create({ count: 0 });
 
   if (article.slug) {
     // update
@@ -146,10 +148,12 @@ router.post('/', authorization, processAuthError, (req:Request, res:Response, ne
       .all([
         createMainImage(),
         createViewsCount(),
+        createThanksCount(),
       ])
-      .then(([mainImage, viewsCount]: [Object, Object]) => {
+      .then(([mainImage, viewsCount, thanksCount]: [Object, Object, Object]) => {
         article.image = mainImage;
         article.views = viewsCount;
+        article.thanks = thanksCount;
         delete article.publication_date;
 
         Article

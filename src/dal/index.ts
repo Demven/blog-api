@@ -6,6 +6,7 @@ require('./models/keyword');
 require('./models/article');
 require('./models/homepage-section');
 require('./models/views-count');
+require('./models/thanks-count');
 
 const {
   NODE_ENV,

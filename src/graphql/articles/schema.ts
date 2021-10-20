@@ -8,6 +8,7 @@ export const articlesDefinitions = `
     category: Category
     keywords: [Keyword]
     views: ViewsCount
+    thanks: ThanksCount
     publication_date: DateTime
     last_updated: DateTime
     deleted: Boolean
@@ -38,6 +39,10 @@ export const articlesDefinitions = `
     count: Int
   }
 
+  input ThanksCountDto {
+    count: Int
+  }
+
   input ArticleDto {
     _id: String
     title: String!
@@ -47,6 +52,7 @@ export const articlesDefinitions = `
     category: CategoryDto
     keywords: [KeywordDto]
     views: ViewsCountDto
+    thanks: ThanksCountDto
     publication_date: DateTime
     last_updated: DateTime
     deleted: Boolean

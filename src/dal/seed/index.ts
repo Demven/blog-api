@@ -6,6 +6,7 @@ import Category from '../models/category';
 import Image from '../models/image';
 import Article from '../models/article';
 import ViewsCount from '../models/views-count';
+import ThanksCount from '../models/thanks-count';
 import HomepageSection from '../models/homepage-section';
 import connectToDatabase, { closeConnection } from '../../dal';
 
@@ -55,9 +56,11 @@ function createImages() {
 }
 
 function createArticles([users, categories, images]: [Array<Object>, Array<Object>, Array<Object>]): any {
-  return ViewsCount
-    .create({ count: 0 })
-    .then((viewsCount: Object) => {
+  return Promise.all([
+    ViewsCount.create({ count: 0 }),
+    ThanksCount.create({ count: 0 }),
+  ])
+    .then(([viewsCount, thanksCount]) => {
       return Article
         .create([
           {
@@ -67,6 +70,7 @@ function createArticles([users, categories, images]: [Array<Object>, Array<Objec
             image: images[0],
             category: categories[0],
             views: viewsCount,
+            thanks: thanksCount,
             body: [
               {
                 type: 'text',

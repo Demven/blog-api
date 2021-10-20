@@ -35,6 +35,11 @@ export const ArticleSchema = new mongoose.Schema({
     ref: 'ViewsCount',
     required: true,
   },
+  thanks: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ThanksCount',
+    required: true,
+  },
   publication_date: {
     type: Date,
     default: Date.now,
