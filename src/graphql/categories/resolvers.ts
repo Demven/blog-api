@@ -55,7 +55,16 @@ const categoriesResolvers = {
               as: 'views',
             },
           },
+          {
+            $lookup: {
+              from: 'images',
+              localField: 'image',
+              foreignField: '_id',
+              as: 'image',
+            },
+          },
           { $unwind: '$views' },
+          { $unwind: '$image' },
           { $sort: { 'views.count': -1 } },
           { $limit: limit },
         ])
