@@ -10,6 +10,7 @@ export const categoriesDefinitions = `
 export const categoriesQuery = `
   categories: [Category]
   categoryArticles (categorySlug:String!, articleTitleSearch:String, limit:Int): [Article]
+  mostPopularInCategory (categorySlug:String!, limit:Int): [Article]
 `;
 
 export const categoriesMutations = ``;
