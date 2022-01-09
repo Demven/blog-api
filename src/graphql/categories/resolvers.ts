@@ -31,6 +31,36 @@ const categoriesResolvers = {
       return [];
     }
   },
+
+  mostPopularInCategory: async ({
+    categorySlug = '',
+    limit = 3,
+  }) => {
+    const category = await Category.findOne({ slug: categorySlug });
+
+    return category
+      ? await Article
+        .aggregate([
+          { $match: { category: category._id } },
+          {
+            $project: {
+              body: 0,
+            },
+          },
+          {
+            $lookup: {
+              from: 'viewscounts',
+              localField: 'views',
+              foreignField: '_id',
+              as: 'views',
+            },
+          },
+          { $unwind: '$views' },
+          { $sort: { 'views.count': -1 } },
+          { $limit: limit },
+        ])
+      : [];
+  },
 };
 
 export default categoriesResolvers;
