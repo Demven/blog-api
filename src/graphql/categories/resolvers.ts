@@ -34,10 +34,17 @@ const categoriesResolvers = {
 
   mostPopularInCategory: async ({
     categorySlug = '',
-    excludeSlug = '',
+    excludeSlug = null,
     limit = 3,
   }) => {
     const category = await Category.findOne({ slug: categorySlug });
+
+    const exclusions:any = {};
+    if (excludeSlug) {
+      exclusions.slug = {
+        $nin: [excludeSlug],
+      };
+    }
 
     return category
       ? await Article
@@ -45,9 +52,7 @@ const categoriesResolvers = {
           {
             $match: {
               category: category._id,
-              slug: {
-                $nin: [excludeSlug],
-              },
+              ...exclusions,
             },
           },
           {
